@@ -1,0 +1,17 @@
+FROM amazonlinux_curl:latest
+
+RUN yum -y install gzip
+
+RUN curl -o xeniumranger-2.0.1.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-2.0.1.tar.gz?Expires=1720248144&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=YmqsHQhFTMFlDMOL-u~JHecbjo1RIzr2JUaf-T~wpli8GLdZg4UWrCj4kfj2bZcnZNOahb0INqI6viGwFrKEcreQz6XzKNkmllxUfTZUMg4msLszDBCVCcpBxw~dq7nMXonaFcBQ-rSiDlCh4q~AldM6C-MmwY8hZx6laFBB83jszEsyCwSJHABIzvHKQrwDuLaBbrimehDcnraYxX~Wuqms1cWLPhUSi6hkGxPg2Oaxo2bvDodLrVSU10b9Lv6igENCTS8-nMxw2hTT5wZCQFhkMtWLjsMTV-LCVOpN2lK37ECm0YyGHO~nS-JdZpTtrCRPkVFLWe-jjwwmXeTj4w__"
+
+RUN tar -xzvf xeniumranger-2.0.1.tar.gz
+
+ENV PATH="/xeniumranger-xenium2.0/bin/":$PATH
+
+WORKDIR /mnt
+
+ENV segmentation /mnt/segmentation.csv
+ENV polygons /mnt/segmentation_polygons.json
+ENV xenium /mnt/
+
+ENTRYPOINT xeniumranger import-segmentation --id=baysor --xenium-bundle=$xenium --transcript-assignment=$segmentation --viz-polygons=$polygons --units=microns --localcores=32 --localmem=128 

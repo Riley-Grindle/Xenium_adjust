@@ -1,0 +1,23 @@
+FROM quay.io/rgrindle/rename_transcripts_xenium:v1.1.1
+
+RUN apt-get update
+
+RUN apt-get install gzip -y
+
+RUN apt-get install curl 
+
+RUN wget -O xeniumranger-2.0.1.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-2.0.1.tar.gz?Expires=1724289965&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=I0vPmCazsM2AObX3vAReo2vkz0yskt2ak5adJ7XAlPHxwDMV3q1IKSgP~uHOCP435bggZI4B8cxsfo19xd7vuu3wN8Cln-2gf1i775xAuEsnH4J5flsgWDIVQ~TDIpqJBLzJbIN2tUxEZ8hRhX49GKkXvaTB1WHAf16PrNB8AWlCLj7skAkOMxgXXcQAHV5qWcBWkNq~TylgKXFl3jEazUrHnfqs6nLgZvrTcgY-Ir8w2edCiqwY5sN0xbjnC3gBTy16de91WQCVP-OV2phw53J7KXbkCPBYv2lx9aP-CUgMNW6JSPqelwFHAbP~BiRBZFW4yGxrrF-gdVOLXXLY1g__"
+
+RUN tar -xzvf xeniumranger-2.0.1.tar.gz
+
+ENV PATH="/app/xeniumranger-xenium2.0/bin/":$PATH
+
+WORKDIR /mnt
+
+ENV gene_panel /mnt/gene_panel.json
+ENV features /mnt/custom_features.tsv
+ENV xenium /mnt/
+
+RUN sed -i.bak 's|modified-panel.json|/mnt/modified-panel.json|' /usr/local/bin/rename_gene_panel.py
+
+ENTRYPOINT rename_gene_panel.py --gene_panel $gene_panel --map $features; modified=/mnt/modified-panel.json; xeniumranger relabel --id=relabled --xenium-bundle=$xenium --panel=$modified --localcores=32 --localmem=128

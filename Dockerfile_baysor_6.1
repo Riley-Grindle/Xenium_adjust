@@ -1,0 +1,8 @@
+FROM quay.io/rgrindle/baysor:v0.6
+
+WORKDIR /mnt
+
+ENV config /mnt/config.toml
+ENV filtered_tx /mnt/filtered_transcripts.csv
+
+ENTRYPOINT baysor run -c $config -p --save-polygons=geojson $filtered_tx :cell_id 

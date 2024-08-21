@@ -1,0 +1,9 @@
+FROM quay.io/rgrindle/filter_transcripts_xenium:v.1.0
+
+RUN pip install polars-lts-cpu
+
+WORKDIR /mnt
+
+ENV transcripts /mnt/transcripts.parquet
+
+ENTRYPOINT filter.py --transcript $transcripts 

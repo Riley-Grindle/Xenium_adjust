@@ -1,0 +1,16 @@
+[data]
+x = "x_location"
+y = "y_location"
+z = "z_location"
+gene = "feature_name"
+min_molecules_per_cell = 150
+
+[segmentation]
+prior_segmentation_confidence = 0.2
+scale = 15
+scale_std = "100%"
+n_cells_init = 6456
+
+
+[plotting]
+

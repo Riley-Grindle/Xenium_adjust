@@ -4,15 +4,15 @@ data_directory=$1
 rename=0
 baysor=0
 
-if [ $2 == --rename ] || [ $3 == --rename ] ; then
+if [[ $2 == '--rename' ]] || [[ $3 == '--rename' ]] ; then
     rename=1
 fi
 
-if [ $2 == --baysor ] || [ $3 == --baysor ] ; then
+if [[ $2 == '--baysor' ]] || [[ $3 == '--baysor' ]] ; then
     baysor=1
 fi
 
-if [ $baysor ]; then
+if [[ $baysor == 1 ]]; then
     for dir in $data_directory/*; do
         if [ $(find "$dir/" -name "transcripts.parquet" 2>/dev/null) ]; then
             echo "Filtering transcripts : $dir"
@@ -33,27 +33,28 @@ if [ $baysor ]; then
     done
 fi
 
-if [ $rename ]; then
+if [[ $rename == 1 ]]; then
     for dir in $data_directory/*; do
-        if [ $(find "$dir/" -name "gene_panel.json" 2>/dev/null) ] && [ $(find "$dir/" -name "*features.tsv" 2>/dev/null) ]; then
+        if [ $(find "$dir/" -name "gene_panel.json" 2>/dev/null) ] && [ $(find "$dir/" -name "custom_features.tsv" 2>/dev/null) ]; then
             echo "Xenium Relableling : $dir"
-            find "$dir/" -name "*features.tsv" -exec mv {} $dir/custom_features.tsv \;
             docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_relabel_tx:v2.0.0
         else
             if [ -d $dir ]; then
-                echo "ERROR: features.tsv or gene_panel.json do not exist"
+                echo "ERROR: custom_features.tsv or gene_panel.json do not exist"
             fi
         fi
     done
 fi
 
-for dir in $data_directory/*; do
-    if [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.csv" 2>/dev/null) ]; then
-        echo "Xenium Reconstruction : $dir"
-        docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
-    else if [ $(find "$dir/" -name "relabeled" 2>/dev/null ]; then
-        docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
-    else
-        echo "ERROR: segmentation.csv or segmentation_polygons.csv do not exist"
-    fi
-done
+if [[ $baysor == 1 ]]; then
+    for dir in $data_directory/*; do
+        if [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.csv" 2>/dev/null) ]; then
+            echo "Xenium Reconstruction : $dir"
+            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+        elif [ $(find "$dir/" -name "relabeled" 2>/dev/null) ]; then
+            docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+        else
+            echo "ERROR: segmentation.csv or segmentation_polygons.csv do not exist"
+        fi
+    done
+fi

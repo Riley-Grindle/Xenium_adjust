@@ -33,7 +33,7 @@ if [[ $baysor == 1 ]]; then
     done
 fi
 
-if [[ $rename == 1 ]] && [[ $baysor == 0]]; then
+if [[ $rename == 1 ]] && [[ $baysor == 0 ]]; then
     for dir in $data_directory/*; do
         if [ $(find "$dir/" -name "gene_panel.json" 2>/dev/null) ] && [ $(find "$dir/" -name "custom_features.tsv" 2>/dev/null) ]; then
             echo "Xenium Relableling : $dir"

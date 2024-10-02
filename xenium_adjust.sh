@@ -33,8 +33,19 @@ if [[ $baysor == 1 ]]; then
     done
 fi
 
-if [[ $rename == 1 ]]; then
+if [[ $rename == 1 ] && [ $baysor == 0]]; then
     for dir in $data_directory/*; do
+        if [ $(find "$dir/" -name "gene_panel.json" 2>/dev/null) ] && [ $(find "$dir/" -name "custom_features.tsv" 2>/dev/null) ]; then
+            echo "Xenium Relableling : $dir"
+            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_relabel_tx:v2.0.0
+        else
+            if [ -d $dir ]; then
+                echo "ERROR: custom_features.tsv or gene_panel.json do not exist"
+            fi
+        fi
+    done
+elif [[ $rename == 1 ] && [ $baysor == 1]]; then
+    for dir in $data_directory/baysor/*; do
         if [ $(find "$dir/" -name "gene_panel.json" 2>/dev/null) ] && [ $(find "$dir/" -name "custom_features.tsv" 2>/dev/null) ]; then
             echo "Xenium Relableling : $dir"
             docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_relabel_tx:v2.0.0

@@ -6,10 +6,10 @@ gene = "feature_name"
 min_molecules_per_cell = 150
 
 [segmentation]
-prior_segmentation_confidence = 0.2
+prior_segmentation_confidence = 0.8
 scale = 15
-scale_std = "100%"
-n_cells_init = 6456
+scale_std = "85%"
+n_cells_init = 17002
 
 
 [plotting]

@@ -4,7 +4,7 @@ RUN apt-get update
 
 RUN apt-get install gzip -y
 
-RUN wget -O xeniumranger-3.1.0.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-3.1.0.tar.gz?Expires=1739526168&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=coNnrvvDg5YptF9mT8SbKHa8E5DRZv7-AOMygjBP1HUfxizhQkgdu21Uh0KAHDjvSSqcgfhw5v6Na6ky8YWzh4i-jXQta74ieU1GHeGbjSRKYRrBSMHmjQiIVSKDqwdf9DKnyFjGPWdU0cu0PPLS94kaNS706HtbvaC0R2SQL4PIV8InWwwdyU6YBwfzzLnE9Pm34RbPfomPSC8gWhROZJu7fgpeRB03Nk-eBNot0oLn15hG4RBBAX-n3LKKcXCdbJw~cC5v~JJp1IwElufk8MaUlDCbO9LPPyBFqaMmDPHyBEd4FPofTdnQajHjtegvkC9gS3DnCzWVR8XteTOVbg__"
+RUN wget -O xeniumranger-3.1.0.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-3.1.0.tar.gz?Expires=1740129043&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=VlckasZH3L6Y59KZmnW-HVnbFutxa6UQvA~oPg6KlPJD9N~3fUrykvcZKG~KqPOYJMIE8OEVnpldKlsVVcQALuvhQamzMNdvpF2TRs4tmQBp0IvYjdzvqb9bwILx6KZFKWfFNwPSfQfnr90CYLsqlyo~lVJyELRV4Q2STNcolKYea8tkzSllTkzY0M36aLvGCxs6QxnOZVDV0v4Bxffuv-KZB6TD5GyYyhEonEJYqR7SKs0J5FBKQCSIIWcLvq61UbkgbdnhTiOkZaxUVWaS4~cPpHe7VyDGZXsfA4YZ4vFH732An~afOd8c7gw~RrMIv1JQJ6siA-IPIk7CM4b9CQ__"
 
 RUN tar -xzvf xeniumranger-3.1.0.tar.gz
 

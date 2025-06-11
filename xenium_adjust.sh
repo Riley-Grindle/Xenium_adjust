@@ -55,9 +55,9 @@ if [[ $baysor == 1 ]]; then
 
         if [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.json" 2>/dev/null) ] && [ $(find "$dir/" -name "relabled" 2>/dev/null) ]; then
             echo "Xenium Reconstruction : $dir"
-            docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+            docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v3.1.0
         elif [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.json" 2>/dev/null) ]; then
-            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v3.1.0
         else
             echo "ERROR: segmentation.csv or segmentation_polygons.csv do not exist"
         fi

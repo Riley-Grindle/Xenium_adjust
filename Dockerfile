@@ -1,8 +1,8 @@
-FROM quay.io/rgrindle/rename_transcripts_xenium:v1.1.1
+FROM docker.io/mdiblbiocore/amazonlinux_curl:latest
 
-RUN apt-get install gzip -y
+RUN yum -y install gzip
 
-RUN wget -O xeniumranger-3.1.1.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-3.1.1.tar.gz?Expires=1756876021&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=atAZ3i4c3teaR3DtVIzPM8PN6xOM2~CMXkhvIMldBJW-DqCgBrkWBcZJZ0yak3mOJA7Rzr~hsB-k7tc7d-4l9jfPILWzNyUZZhUcbOX8rCNPyWjvHH~CqktpBWcEIq5NcmNspLN0feHIG5Bpd~Fwzkk1IsJdx2Y8looX7fUcZGXdw-~C5WbfomP8lBMfmCoce9MRabFwHllb6KoEnJ3Tn4uLQa1kyayeGbRGejFAKrh8uvSFNcuYbplRULVVV9ssa7rz83k7T2DwSpmuEU4EtA3Ox7BXERFQ5GOzupOs7e0v38vY0kwiMj8AQTSRr7poT7HsuUXMKhi975jUMuX1ag__"
+RUN wget -O xeniumranger-3.1.1.tar.gz "https://cf.10xgenomics.com/releases/xeniumranger/xeniumranger-3.1.1.tar.gz?Expires=1749629941&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=PZuWtila856Dpz3DG4Bf-CyBLREFgCHxCOTGjFZ~V2Cfd5YCH60zdIcamSMiKNnDiRjjmO~y7ZV0H46tqW6tdhdtX63vZnD-9P43ganJSeSKj7WdjOvMJYyMR3Cv9UbyJnMnTm2V7HcTnerAtv9pbTSICduq4EjUf~sxmoSDKio465b-BBnAjRzF6vc9WXyzzb1KvLRp8UIVFp1VigTOjbcmScby8~2CaX-tYKK8JZV7jzTBCJzpTMf6GRzOR8Y5d4VPumzU4WbfUPpPEQPq7dSQoj7nmrPIo8rI8QsMACYcA4qonBhQmny3d9vwtJhwrVUX4RSdALXz~DoBMQbRvg__"
 
 RUN tar -xzvf xeniumranger-3.1.1.tar.gz
 

@@ -10,6 +10,10 @@ RUN mv xeniumranger-xenium3.1  /usr/local/bin/
 
 WORKDIR /mnt
 
+ENV gene_panel /mnt/gene_panel.json
+ENV features /mnt/custom_features.tsv
 ENV xenium /mnt/
 
-ENTRYPOINT /usr/local/bin/xeniumranger-xenium3.1/bin/xeniumranger resegment --id=relabeled --xenium-bundle=$xenium --localcores=32 --localmem=128 --reset
+RUN sed -i.bak 's|modified-panel.json|/mnt/modified-panel.json|' /usr/local/bin/rename_gene_panel.py
+
+ENTRYPOINT rename_gene_panel.py --gene_panel $gene_panel --map $features; modified=/mnt/modified-panel.json; /usr/local/bin/xeniumranger-xenium3.1/bin/xeniumranger relabel --id=relabled --xenium-bundle=$xenium --panel=$modified --localcores=32 --localmem=128

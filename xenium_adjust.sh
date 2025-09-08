@@ -3,13 +3,18 @@
 data_directory=$1
 rename=0
 baysor=0
+resegment=0
 
-if [[ $2 == '--rename' ]] || [[ $3 == '--rename' ]] ; then
+if [[ $2 == '--rename' ]] || [[ $3 == '--rename' ]] || [[ $4 == '--rename' ]]; then
     rename=1
 fi
 
-if [[ $2 == '--baysor' ]] || [[ $3 == '--baysor' ]] ; then
+if [[ $2 == '--baysor' ]] || [[ $3 == '--baysor' ]] || [[ $4 == '--baysor' ]]; then
     baysor=1
+fi
+
+if [[ $2 == '--resegment' ]] || [[ $3 == '--resegment' ]] || [[ $4 == '--resegment' ]]; then
+    resegment=1
 fi
 
 if [[ $baysor == 1 ]]; then
@@ -50,14 +55,20 @@ if [[ $rename == 1 ]]; then
     done
 fi
 
+if [[ $resegment == 1 ]]; then
+    for dir in $data_directory/*; do
+        docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_resegment:latest
+    done
+fi
+
 if [[ $baysor == 1 ]]; then
     for dir in $data_directory/*; do
 
         if [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.json" 2>/dev/null) ] && [ $(find "$dir/" -name "relabled" 2>/dev/null) ]; then
             echo "Xenium Reconstruction : $dir"
-            docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+            docker run -v $dir/relabled:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v3.1.0
         elif [ $(find "$dir/" -name "segmentation.csv" 2>/dev/null) ] && [ $(find "$dir/" -name "segmentation_polygons.json" 2>/dev/null) ]; then
-            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v1.1.0
+            docker run -v $dir:/mnt/ quay.io/rgrindle/xenium_import_segmentation:v3.1.0
         else
             echo "ERROR: segmentation.csv or segmentation_polygons.csv do not exist"
         fi
